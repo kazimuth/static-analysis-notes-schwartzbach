@@ -1,4 +1,4 @@
-use std::ops::Index;
+use std::ops::{Index, IndexMut};
 use std::{fmt::Debug, hash::Hash, marker::PhantomData};
 
 pub struct Storage<T> {
@@ -28,6 +28,11 @@ impl<T> Index<Node<T>> for Storage<T> {
 
     fn index(&self, index: Node<T>) -> &T {
         &self.nodes[index.id() as usize]
+    }
+}
+impl<T> IndexMut<Node<T>> for Storage<T> {
+    fn index_mut(&mut self, index: Node<T>) -> &mut T {
+        &mut self.nodes[index.id() as usize]
     }
 }
 pub struct StorageIter<'a, T> {
