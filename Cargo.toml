@@ -1,10 +1,12 @@
 [package]
 edition = "2021"
-name = "static-analysis-notes-schwartzback"
+name = "sans"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 ahash = "0.8.0"
+itertools = "0.10"
 tracing = "0.1"
+tracing-subscriber = "0.3"
