@@ -35,6 +35,11 @@ impl<T> IndexMut<Node<T>> for Storage<T> {
         &mut self.nodes[index.id() as usize]
     }
 }
+impl<T> Default for Storage<T> {
+    fn default() -> Self {
+        Self { nodes: vec![] }
+    }
+}
 pub struct StorageIter<'a, T> {
     current: usize,
     storage: &'a Storage<T>,

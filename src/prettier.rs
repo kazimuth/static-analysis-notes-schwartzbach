@@ -49,6 +49,7 @@
 //! FIXME: there's no a priori reason you couldn't have a non-treelike lattice of
 //! groups, but that would require a different interface.
 
+use itertools::Itertools;
 use std::{
     borrow::Cow,
     collections::hash_map::Entry,
@@ -140,6 +141,13 @@ impl<'a> Doc<'a> {
                 + Doc::NewlineOrEmpty
                 + Doc::text(end),
         )
+    }
+
+    pub fn joined(items: impl Iterator<Item = Doc<'a>>, separator: Doc<'a>) -> Doc<'a> {
+        items
+            .intersperse(separator)
+            .reduce(|a, b| a + b)
+            .unwrap_or(Doc::Empty)
     }
 
     /// Prepare a doc for layout.
@@ -414,7 +422,6 @@ mod tests {
         let prepared = doc.prepare();
         println!("{:#?}", prepared);
 
-        // note: this
         assert_eq!(prepared.layout(13), "hello a b c d");
         assert_eq!(prepared.layout(12), "hello a b c\nd");
         assert_eq!(prepared.layout(10), "hello a b\nc\nd");
